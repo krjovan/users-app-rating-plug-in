@@ -40,17 +40,14 @@ function save(callback) {
 }
 
 buildfire.messaging.onReceivedMessage = function (message) {
-    console.log(message);
     var searchOptions = {
         "filter": { "$json.user_id": message.user_id }
     };
-    console.log(searchOptions);
     buildfire.datastore.search(searchOptions, 'userRatings', function (err, records) {
         if (err) {
             console.log('there was a problem retrieving your data');
         }
         else {
-            console.log(records);
             if (records.length == 0) {
                 buildfire.datastore.insert(message, 'userRatings', false, function (err, data) {
                     if (err) {
@@ -58,13 +55,37 @@ buildfire.messaging.onReceivedMessage = function (message) {
                     }
                     else {
                         console.log('Saved successfully!');
+                        refreshAvgAndCount();
                     }
                 });
             } else {
                 buildfire.datastore.searchAndUpdate({ "user_id": message.user_id }, { $set: { "rating": message.rating } }, 'userRatings', function (err, data) {
-                    console.log(data);
+                    buildfire.datastore.search({}, 'userRatings', function (err, records) {
+                        if (err) {
+                            console.log('There was a problem retrieving your data!');
+                        } else {
+                            console.log('Updated successfully!');
+                            refreshAvgAndCount();
+                        }
+                    });
                 });
             }
+        }
+    });
+}
+
+function refreshAvgAndCount() {
+    buildfire.datastore.search({}, 'userRatings', function (err, records) {
+        if (err) {
+            console.log('There was a problem retrieving your data!');
+        } else {
+            console.log(records);
+            document.getElementById('numberOfRatings').innerHTML = records.length;
+            ratingSum = 0;
+            for (var i = 0; i < records.length; i++) {
+                ratingSum = ratingSum + records[i].data.rating;
+            }
+            document.getElementById('averageRating').innerHTML = ratingSum/records.length;            
         }
     });
 }
