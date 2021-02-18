@@ -77,6 +77,7 @@ buildfire.messaging.onReceivedMessage = function (message) {
                     else {
                         console.log('Saved successfully!');
                         refreshAvgAndCount();
+                        reload();
                     }
                 });
             } else {
@@ -87,6 +88,7 @@ buildfire.messaging.onReceivedMessage = function (message) {
                         } else {
                             console.log('Updated successfully!');
                             refreshAvgAndCount();
+                            reload();      
                         }
                     });
                 });
@@ -117,31 +119,27 @@ function refreshAvgAndCount() {
 
 function toggleAverage(avgRadio) {
     settings.showAvg = avgRadio.value;
-
-    save(err => {
-        if (err)
-            return console.error(err);
-        else {
-            load();
-        }
-    });
+    reload();
 }
 
 function toggleCount(countRadion) {
     settings.showCount = countRadion.value;
-
-    save(err => {
-        if (err)
-            return console.error(err);
-        else {
-            load();
-        }
-    });
+    reload();
 }
 
 function round(value, precision) {
     var multiplier = Math.pow(10, precision || 0);
     return Math.round(value * multiplier) / multiplier;
+}
+
+function reload() {
+    save(err => {
+        if (err)
+            return console.error(err);
+        else {
+            load();
+        }
+    });
 }
 
 load();
