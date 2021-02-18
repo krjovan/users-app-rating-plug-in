@@ -88,7 +88,7 @@ buildfire.messaging.onReceivedMessage = function (message) {
                         } else {
                             console.log('Updated successfully!');
                             refreshAvgAndCount();
-                            reload();      
+                            reload();
                         }
                     });
                 });
@@ -102,6 +102,11 @@ function refreshAvgAndCount() {
         if (err) {
             console.log('There was a problem retrieving your data!');
         } else {
+            var five = 0;
+            var four = 0;
+            var three = 0;
+            var two = 0;
+            var one = 0;
             if (records.length == 0) {
                 document.getElementById('numberOfRatings').innerHTML = 0;
                 document.getElementById('averageRating').innerHTML = 0;
@@ -111,8 +116,48 @@ function refreshAvgAndCount() {
             ratingSum = 0;
             for (var i = 0; i < records.length; i++) {
                 ratingSum = ratingSum + records[i].data.rating;
+                if(records[i].data.rating == 5)
+                    ++five;
+                if(records[i].data.rating == 4)
+                    ++four;
+                if(records[i].data.rating == 3)
+                    ++three;
+                if(records[i].data.rating == 2)
+                    ++two;
+                if(records[i].data.rating == 1)
+                    ++one;
+                
             }
             document.getElementById('averageRating').innerHTML = round(ratingSum / records.length, 1);
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+
+                title: {
+                    text: "User Ratings in detail"
+                },
+                axisX: {
+                    interval: 1
+                },
+                axisY2: {
+                    interlacedColor: "rgba(1,77,101,.2)",
+                    gridColor: "rgba(1,77,101,.1)",
+                    title: "Number of Ratings"
+                },
+                data: [{
+                    type: "bar",
+                    name: "companies",
+                    axisYType: "secondary",
+                    color: "#014D65",
+                    dataPoints: [
+                        { y: one, label: "1 points" },
+                        { y: two, label: "2 points" },
+                        { y: three, label: "3 points" },
+                        { y: four, label: "4 points" },
+                        { y: five, label: "5 points" }
+                    ]
+                }]
+            });
+            chart.render();
         }
     });
 }

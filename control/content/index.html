@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 
 <body>
@@ -51,11 +52,14 @@
                         <span>Show number of ratings to user: </span>
                         <input id="countYes" name="radioCount" type="radio" onclick="toggleCount(this);" value="yes">
                         <span style="margin-left: 2px;">Yes</span>
-                        <input id="countNo" name="radioCount" style="margin-left: 10px;" type="radio"  onclick="toggleCount(this);" value="no">
+                        <input id="countNo" name="radioCount" style="margin-left: 10px;" type="radio" onclick="toggleCount(this);" value="no">
                         <span style="margin-left: 2px;">No</span>
                     </span>
 
                 </div>
+            </p>
+            <p>
+                <div id="chartContainer" style="height: 300px; width: 100%;"></div>
             </p>
         </div>
     </div>
