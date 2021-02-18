@@ -57,6 +57,14 @@ function saveUserRating(rating) {
         }
         else {
             loadUserRating();
+            authManager.getCurrentUser((err, user) => {
+                if (err) {
+                    return console.error(err);
+                }
+                else {
+                    buildfire.messaging.sendMessageToControl({ user_id: user._id, rating: myRating.rating });
+                }
+            });
         }
     });
 }
