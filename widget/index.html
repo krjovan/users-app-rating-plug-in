@@ -16,9 +16,10 @@
 
 	<div class="w3-container w3-center">
 		<div class="w3-container">
-			<p>
+			<p style="margin-top: 10vw">
 				<h3>Rate our application</h3>
 			</p>
+			<p>If you want, give us a rating because we value feedback!</p>
 			<p>
 				<div id="iconsDiv">
 					<i id="1" onclick="saveUserRating(this)" class="" style="font-size:13vw;"></i>
@@ -29,8 +30,20 @@
 
 				</div>
 			</p>
+			<p>(You can change your rating whenever you like, this gives us real-time user satisfaction)</p>
 
-			<p style="font-size: 25vw" id="print"></p>
+			<div id="showingRating">
+				<h3 style="margin-top: 10vw">Overall user rating</h3>
+				<div class="circle">
+					<span id="averageRating"></span>
+				</div>
+			</div>
+
+			<div id="showingCount" style="margin-top: 5vw;">
+				<h5 style="margin-top: 10vw">Number of users who rated our app</h5>
+				<span style="font-size: 15vw" id="numberOfRatings"></span><i style="font-size: 10vw; margin-left: 3vw" class="fa fa-users"></i>
+			</div>
+
 		</div>
 	</div>
 

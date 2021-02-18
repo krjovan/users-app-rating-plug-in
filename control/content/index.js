@@ -1,5 +1,7 @@
 let settings = {
-    icon: 'fa fa-star'
+    icon: 'fa fa-star',
+    showAvg: 'no',
+    showCount: 'no'
 };
 
 function load() {
@@ -8,14 +10,33 @@ function load() {
         if (err) return console.error(err);
 
         if (response && response.data) {
+            settings.icon = response.data.icon;
+            settings.showAvg = response.data.showAvg;
+            settings.showCount = response.data.showCount;
             icons = document.getElementById('iconsDiv').getElementsByTagName('i');
             for (var i = 0; i < icons.length; i++) {
                 if (icons[i].className == response.data.icon) {
                     icons[i].style.color = 'orange'
                 }
             }
+            if (response.data.showAvg == 'yes') {
+                document.getElementById("avgYes").checked = true;
+            } else {
+                document.getElementById("avgNo").checked = true;
+            }
+            if (response.data.showCount == 'yes') {
+                document.getElementById("countYes").checked = true;
+            } else {
+                document.getElementById("countNo").checked = true;
+            }
+        } else {
+            document.getElementById("avgNo").checked = true;
+            document.getElementById("countNo").checked = true;
+
         }
     });
+
+    refreshAvgAndCount();
 }
 
 function chooseIcon(icon) {
@@ -79,15 +100,48 @@ function refreshAvgAndCount() {
         if (err) {
             console.log('There was a problem retrieving your data!');
         } else {
-            console.log(records);
+            if (records.length == 0) {
+                document.getElementById('numberOfRatings').innerHTML = 0;
+                document.getElementById('averageRating').innerHTML = 0;
+                return;
+            }
             document.getElementById('numberOfRatings').innerHTML = records.length;
             ratingSum = 0;
             for (var i = 0; i < records.length; i++) {
                 ratingSum = ratingSum + records[i].data.rating;
             }
-            document.getElementById('averageRating').innerHTML = ratingSum/records.length;            
+            document.getElementById('averageRating').innerHTML = round(ratingSum / records.length, 1);
         }
     });
+}
+
+function toggleAverage(avgRadio) {
+    settings.showAvg = avgRadio.value;
+
+    save(err => {
+        if (err)
+            return console.error(err);
+        else {
+            load();
+        }
+    });
+}
+
+function toggleCount(countRadion) {
+    settings.showCount = countRadion.value;
+
+    save(err => {
+        if (err)
+            return console.error(err);
+        else {
+            load();
+        }
+    });
+}
+
+function round(value, precision) {
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
 }
 
 load();

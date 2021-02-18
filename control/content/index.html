@@ -15,9 +15,9 @@
     <div class="w3-container">
         <div class="w3-container">
             <p>
-                <label class="w3-text-blue">
+                <div class="w3-text-blue">
                     <b>Choose an icon for the rating scale</b>
-                </label>
+                </div>
                 <div id="iconsDiv">
                     <i onclick="chooseIcon(this)" class="fa fa-star" style="font-size:60px;"></i>
                     <i onclick="chooseIcon(this)" class="fa fa-heart" style="font-size:60px;"></i>
@@ -25,8 +25,38 @@
                     <i onclick="chooseIcon(this)" class="fa fa-thumbs-up" style="font-size:60px;"></i>
                 </div>
             </p>
-            <p id="averageRating"></p>
-            <p id="numberOfRatings"></p>            
+            <p>
+                <div class="w3-text-blue">
+                    <b>Average user rating</b>
+                </div>
+                <div>
+                    <span style="font-size: 40px;" id="averageRating"></span>
+                    <span style="margin-left: 20px;">
+                        <span>Show average rating to user: </span>
+                        <input id="avgYes" name="radioAvg" type="radio" onclick="toggleAverage(this);" value="yes">
+                        <span style="margin-left: 2px;">Yes</span>
+                        <input id="avgNo" name="radioAvg" style="margin-left: 10px;" onclick="toggleAverage(this);" value="no" type="radio">
+                        <span style="margin-left: 2px;">No</span>
+
+                    </span>
+                </div>
+            </p>
+            <p>
+                <div class="w3-text-blue">
+                    <b>Number of users who rated the app</b>
+                </div>
+                <div>
+                    <span style="font-size: 40px;" id="numberOfRatings"></span>
+                    <span style="margin-left: 20px;">
+                        <span>Show number of ratings to user: </span>
+                        <input id="countYes" name="radioCount" type="radio" onclick="toggleCount(this);" value="yes">
+                        <span style="margin-left: 2px;">Yes</span>
+                        <input id="countNo" name="radioCount" style="margin-left: 10px;" type="radio"  onclick="toggleCount(this);" value="no">
+                        <span style="margin-left: 2px;">No</span>
+                    </span>
+
+                </div>
+            </p>
         </div>
     </div>
 
